@@ -1,0 +1,3 @@
+namespace AppleGUI {
+    // TODO
+}

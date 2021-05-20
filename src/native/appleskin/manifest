@@ -1,0 +1,12 @@
+{
+    "shared": {
+        "name": "appleskin",
+		"include": [
+			"shared_headers"
+		]
+    },
+    "depends": [
+    	"innercore",
+    	"nativejs"
+	]
+}
