@@ -104,18 +104,6 @@ def task_compile_native_release():
 	return compile_all_using_make_config(abis)
 
 
-@task("compileJavaDebug", lock=["java", "cleanup", "push"])
-def task_compile_java_debug():
-	from java.java_build import compile_all_using_make_config
-	return compile_all_using_make_config()
-
-
-@task("compileJavaRelease", lock=["java", "cleanup", "push"])
-def task_compile_java_release():
-	from java.java_build import compile_all_using_make_config
-	return compile_all_using_make_config()
-
-
 @task("buildScripts", lock=["script", "cleanup", "push"])
 def task_build_scripts():
 	from script_build import build_all_scripts

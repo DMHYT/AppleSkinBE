@@ -19,6 +19,3 @@
 
 // Original Forge mod by squeek502
 // https://www.curseforge.com/minecraft/mc-mods/appleskin
-
-const NativeUI = WRAP_NATIVE("NativeUI");
-const NativeFood = WRAP_NATIVE("NativeFood");

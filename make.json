@@ -4,7 +4,8 @@
             "name": "Apple Skin BE",
             "author": "vsdum",
             "version": "1.0",
-            "description": "Port of the Apple Skin mod from Minecraft: Java Edition to InnerCore 2.0+ / Horizon / Minecraft: Bedrock Edition 1.16+"
+            "description": "Port of the Apple Skin mod from Minecraft: Java Edition to InnerCore 2.0+ / Horizon / Minecraft: Bedrock Edition 1.16+",
+            "icon": "src/icon.png"
         },
         "api": "CoreEngine"
     },
@@ -20,7 +21,7 @@
             "nativejs"
         ],
         "excludeFromRelease": [],
-        "pushTo": "storage/emulated/0/games/horizon/packs/Inner_Core/innercore/mods/AppleSkinBE",
+        "pushTo": "storage/emulated/0/games/horizon/packs/Inner_Core_1/innercore/mods/AppleSkinBE",
         "ndkPath": null
     },
     "resources": [
