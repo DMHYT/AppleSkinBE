@@ -11,9 +11,15 @@ class Options {
     UIProfile getUIProfile() const;
 };
 
+class IntOption {
+    public:
+    int getValue() const;
+};
+
 class ClientInstance {
     public:
     Options* getOptions() const;
+    IntOption* getGuiScaleOption() const;
 };
 
 class FoodItemComponent {
