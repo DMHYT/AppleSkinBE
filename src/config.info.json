@@ -1,0 +1,12 @@
+{
+    "description": {
+        "ru": "    Настройки мода:",
+        "en": "    Mod settings:"
+    },
+ "properties": {
+        "enabled": {
+            "name": {"en": "Enable mod", "ru": "Включить мод"},
+            "index": 0
+        }
+ }
+}
