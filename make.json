@@ -1,10 +1,10 @@
 {
     "global": {
         "info": {
-            "name": "Apple Skin BE",
-            "author": "vsdum",
+            "name": "Apple Skin",
+            "author": "vsdum & pomazuevmaksim",
             "version": "1.0",
-            "description": "Port of the Apple Skin mod from Minecraft: Java Edition to InnerCore 2.0+ / Horizon / Minecraft: Bedrock Edition 1.16+",
+            "description": "A client-side mod providing additional HUD features for hunger and saturation mechanics.",
             "icon": "src/icon.png"
         },
         "api": "CoreEngine"
