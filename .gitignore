@@ -28,5 +28,5 @@ toolchain/adb
 toolchain/bin
 
 # Change `sample` to your native module name
-src/native/sample/shared_headers/**
-!src/native/sample/shared_headers/.placeholder
+src/native/appleskin/shared_headers/**
+!src/native/appleskin/shared_headers/.placeholder
