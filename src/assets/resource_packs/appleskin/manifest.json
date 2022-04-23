@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "AppleSkin mod UI resources",
+        "name": "AppleSkin",
+        "uuid": "ed365051-b429-42df-936a-367d1af0c30a",
+        "version": [ 1, 0, 0 ],
+        "min_engine_version": [ 1, 13, 0 ]
+    },
+    "modules": [
+        {
+            "description": "AppleSkin mod UI resources",
+            "type": "resources",
+            "uuid": "4f51928f-627a-4c47-a52b-135c8ab4dea3",
+            "version": [ 1, 0, 0 ]
+        }
+    ]
+}

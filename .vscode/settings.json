@@ -4,11 +4,9 @@
     "files.exclude": {
         "**/__pycache__/**": true,
         "**/tsconfig.json": true,
-        ".vscode": true,
         ".gitignore": true,
         ".classpath": true,
         "toolchain/ndk": true,
-        "toolchain/stdincludes": true,
         "toolchain/classpath": true,
         "toolchain/bin": true,
         "toolchain/adb": true,
@@ -19,5 +17,6 @@
     },
     "java.project.referencedLibraries": [
         "toolchain/classpath/*.jar"
-    ]
+    ],
+    "C_Cpp.errorSquiggles": "Disabled"
 }

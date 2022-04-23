@@ -1,6 +1,6 @@
 ConfigureMultiplayer({
-    		name: "Apple Skin",
-    		version: "1.0",
-    		isClientOnly: true
+	name: "Apple Skin",
+	version: "1.0",
+	isClientOnly: true
 });
 Launch();

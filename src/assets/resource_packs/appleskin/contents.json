@@ -1,0 +1,25 @@
+{
+    "content": [
+        {
+            "path": "pack_icon.png"
+        },
+        {
+            "path": "manifest.json"
+        },
+        {
+            "path": "textures/ui/appleskin_exhaustion.png"
+        },
+        {
+            "path": "textures/ui/appleskin_saturation_0.png"
+        },
+        {
+            "path": "textures/ui/appleskin_saturation_1.png"
+        },
+        {
+            "path": "textures/ui/appleskin_saturation_2.png"
+        },
+        {
+            "path": "textures/ui/appleskin_saturation_3.png"
+        }
+    ]
+}

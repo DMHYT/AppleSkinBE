@@ -1,0 +1,113 @@
+{
+    "description": {
+        "en": "This is a configuration of AppleSkin mod",
+        "ru": "Это конфигурация мода AppleSkin"
+    },
+    "properties": {
+        "enabled": {
+            "name": {
+                "en": "Enable Mod",
+                "ru": "Включить мод"
+            }
+        },
+        "showFoodValuesInTooltip": {
+            "name": {
+                "en": "Show Food Values In Tooltip",
+                "ru": "Показывать значения еды в подсказках"
+            },
+            "description": {
+                "en": "If true, shows the hunger and saturation values of food in its tooltip",
+                "ru": "Если включено, показывает значения сытости и насыщения еды в её подсказке"
+            },
+            "displayIf": "enabled"
+        },
+        "showSaturationHudOverlay": {
+            "name": {
+                "en": "Show Saturation HUD Overlay",
+                "ru": "Показывать HUD-оверлей насыщения"
+            },
+            "description": {
+                "en": "If true, shows your current saturation level overlayed on the hunger bar",
+                "ru": "Если включено, ваш текущий уровень насыщения будет отображаться поверх полоски сытости"
+            },
+            "displayIf": "enabled"
+        },
+        "showFoodValuesHudOverlay": {
+            "name": {
+                "en": "Show Food Values HUD Overlay",
+                "ru": "Показывать HUD-оверлей значений еды"
+            },
+            "description": {
+                "en": "If true, shows the hunger (and saturation if \"Show Saturation HUD Overlay\" is true) that would be restored by food you are currently holding",
+                "ru": "Если включено, поверх полоски сытости будет отображаться уровень сытости (и насыщения, если настройка \"Показывать HUD-оверлей насыщения\" включена), которые будут восстанавливаться при съедении еды, которую вы в данный момент держите в руке"
+            },
+            "displayIf": "enabled"
+        },
+        "showFoodValuesHudOverlayWhenOffhand": {
+            "name": {
+                "en": "Show Food Values HUD Overlay When Offhand",
+                "ru": "Показывать HUD-оверлей значений еды в левой руке"
+            },
+            "description": {
+                "en": "If true, enables the hunger/saturation/health overlays for food in your off-hand",
+                "ru": "Если включено, активируются оверлеи сытости/насыщения/здоровья для еды в левой руке"
+            },
+            "displayIf": "enabled"
+        },
+        "showFoodExhaustionHudUnderlay": {
+            "name": {
+                "en": "Show Food Exhaustion HUD Underlay",
+                "ru": "Показывать HUD-андерлей истощения"
+            },
+            "description": {
+                "en": "If true, shows your food exhaustion as a progress bar behind the hunger bars",
+                "ru": "Если включено, позади полоски сытости будет отображаться ваш уровень истощения в виде полоски прогресса"
+            },
+            "displayIf": "enabled"
+        },
+        "showFoodStatsInDebugOverlay": {
+            "name": {
+                "en": "Show Food Stats In Debug Overlay (unused)",
+                "ru": "Показывать значения еды на экране отладки (не используется)"
+            },
+            "description": {
+                "en": "If true, adds a line that shows your hunger, saturation and exhaustion level in the F3 debug overlay",
+                "ru": "Если включено, на экран отладки F3 будет добавлена строка с уровнем вашей сытости, насыщения и истощения"
+            },
+            "displayIf": "enabled"
+        },
+        "showFoodHealthHudOverlay": {
+            "name": {
+                "en": "Show Food Health HUD Overlay (unused)",
+                "ru": "Показывать HUD-overlay здоровья, восстанавливаемого едой (не используется)"
+            },
+            "description": {
+                "en": "If true, shows estimated health restored by food on the health bar",
+                "ru": "Если включено, на полоске здоровья будет отображаться приблизительное значение здоровья, восстанавливаемое едой в руке"
+            },
+            "displayIf": "enabled"
+        },
+        "showVanillaAnimationsOverlay": {
+            "name": {
+                "en": "Show Vanilla Animations Overlay",
+                "ru": "Анимировать HUD-оверлеи"
+            },
+            "description": {
+                "en": "If true, health/hunger overlay will shake to match Minecraft's icon animations",
+                "ru": "Если включено, оверлеи здоровья/сытости будут дрожать, чтобы соответствовать анимациям иконок Minecraft"
+            },
+            "displayIf": "enabled"
+        },
+        "maxHudOverlayFlashAlpha": {
+            "name": {
+                "en": "Max HUD Overlay Flash Alpha",
+                "ru": "Максимальное значение непрозрачности HUD-оверлеев"
+            },
+            "description": {
+                "en": "Alpha value of the flashing icons at their most visible point (1.0 = fully opaque, 0.0 = fully transparent)",
+                "ru": "Значение непрозрачности для мигающих иконок в их самый видимый момент (1.0 = полная непрозрачность, 0.0 = полная прозрачность)"
+            },
+            "displayIf": "enabled"
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "enabled": true,
+    "showFoodValuesInTooltip": true,
+    "showSaturationHudOverlay": true,
+    "showFoodValuesHudOverlay": true,
+    "showFoodValuesHudOverlayWhenOffhand": true,
+    "showFoodExhaustionHudUnderlay": true,
+    "showFoodStatsInDebugOverlay": true,
+    "showFoodHealthHudOverlay": true,
+    "showVanillaAnimationsOverlay": true,
+    "maxHudOverlayFlashAlpha": 0.65
+}

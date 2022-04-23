@@ -2,9 +2,10 @@
     "global": {
         "info": {
             "name": "Apple Skin",
-            "author": "dsdekhm & pomazuevmaksim",
+            "author": "dsdekhm",
             "version": "1.0",
             "description": "A mod that adds some useful information about food/hunger to the HUD",
+            "icon": "src/icon.png",
             "clientside": true
         },
         "api": "CoreEngine"
@@ -26,20 +27,8 @@
     },
     "resources": [
         {
-            "path": "src/assets/res",
-            "type": "resource_directory"
-        },
-        {
-            "path": "src/assets/gui",
-            "type": "gui"
-        },
-        {
             "path": "src/assets/resource_packs/*",
             "type": "minecraft_resource_pack"
-        },
-        {
-            "path": "src/assets/behavior_packs/*",
-            "type": "minecraft_behavior_pack"
         }
     ],
     "sources": [

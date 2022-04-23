@@ -1,12 +1,11 @@
 {
     "shared": {
-        "name": "sample_lib",
-		"include": [
-			"shared_headers"
-		]
+        "name": "appleskin",
+		"include": []
     },
     "depends": [
     	"innercore",
-    	"nativejs"
+    	"nativejs",
+		"gnustl_shared"
 	]
 }
