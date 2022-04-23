@@ -163,7 +163,7 @@ void AppleHungerModule::onRender(ScreenContext* ctx, Vec2* position, int ticks) 
         int foodHunger = foodValues->nutrition;
         float foodSaturationIncrement = foodValues->getSaturationIncrement();
         float playerHunger = player->getHunger();
-        drawHungerOverlay(*ctx, foodHunger, playerHunger, position->x + 1, position->y, AppleMainModule::flashAlpha, HungerHelper::isRotten(heldItem));
+        drawHungerOverlay(*ctx, foodHunger, playerHunger, position->x + 1, position->y, AppleMainModule::flashAlpha, HungerHelper::isRotten(heldItem) || player->hasEffect(*(MobEffect::getById(17))));
         float newFoodValue = playerHunger + foodHunger;
         float newSaturationValue = playerSaturation + foodSaturationIncrement;
         float saturationGained = newSaturationValue > newFoodValue ? newFoodValue - playerSaturation : foodSaturationIncrement;

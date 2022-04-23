@@ -1,3 +1,5 @@
+#include <MobEffect.hpp>
+
 #ifndef APPLESKIN_PLAYER_HPP
 #define APPLESKIN_PLAYER_HPP
 
@@ -16,6 +18,7 @@ class Actor {
     static Actor* wrap(long long);
     ItemStack* getOffhandSlot() const;
     ActorUniqueID* getUniqueID() const;
+    bool hasEffect(MobEffect const&) const;
 };
 
 class Mob : public Actor {public:};
