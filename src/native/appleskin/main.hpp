@@ -2,6 +2,7 @@
 
 #include <mce.hpp>
 #include <ScreenContext.hpp>
+#include <Timer.hpp>
 
 #ifndef APPLESKIN_MAINMODULE_HPP
 #define APPLESKIN_MAINMODULE_HPP
@@ -21,13 +22,18 @@ class AppleMainModule : public Module {
         static bool SHOW_FOOD_HEALTH_HUD_OVERLAY;
         static bool SHOW_VANILLA_ANIMATION_OVERLAY;
         static float MAX_HUD_OVERLAY_FLASH_ALPHA;
+        static bool FLASH_ALPHA_INTERPOLATION;
     };
     static float unclampedFlashAlpha;
+    static float prevFlashAlpha;
     static float flashAlpha;
     static short alphaDir;
-    static void resetFlash() {
-        unclampedFlashAlpha = flashAlpha = 0.0f;
+    static inline void resetFlash() {
+        unclampedFlashAlpha = prevFlashAlpha = flashAlpha = 0.0f;
         alphaDir = 1;
+    }
+    static inline float lerpFlashAlpha() {
+        return prevFlashAlpha + (flashAlpha - prevFlashAlpha) * GlobalContext::getMinecraft()->getTimer()->getAlpha();
     }
     static inline bool shouldRenderAnyOverlays() {
         return ModConfig::SHOW_FOOD_VALUES_OVERLAY || ModConfig::SHOW_SATURATION_OVERLAY || ModConfig::SHOW_FOOD_HEALTH_HUD_OVERLAY;

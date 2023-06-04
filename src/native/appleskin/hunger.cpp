@@ -53,6 +53,12 @@ bool AppleHungerModule::HungerHelper::isRotten(Item* item) {
     return false;
 }
 
+bool AppleHungerModule::HungerHelper::isPlayerHoldingFood() {
+    ItemStack* stack = getCarriedItem(GlobalContext::getLocalPlayer());
+    if(stack == nullptr) return false;
+    return isFood(ItemRegistry::getItemById(stack->getId()));
+}
+
 
 std::vector<Vec2> AppleHungerModule::foodBarOffsets;
 
@@ -160,14 +166,15 @@ void AppleHungerModule::onRender(ScreenContext* ctx, Vec2* position, int ticks) 
         }
         FoodItemComponentLegacy* foodValues = HungerHelper::getFoodValues(heldItem);
         if(!AppleMainModule::ModConfig::SHOW_FOOD_VALUES_OVERLAY) return;
+        float flashAlpha = AppleMainModule::ModConfig::FLASH_ALPHA_INTERPOLATION ? AppleMainModule::lerpFlashAlpha() : AppleMainModule::flashAlpha;
         int foodHunger = foodValues->nutrition;
         float foodSaturationIncrement = foodValues->getSaturationIncrement();
         float playerHunger = player->getHunger();
-        drawHungerOverlay(*ctx, foodHunger, playerHunger, position->x + 1, position->y, AppleMainModule::flashAlpha, HungerHelper::isRotten(heldItem) || player->hasEffect(*(MobEffect::getById(17))));
+        drawHungerOverlay(*ctx, foodHunger, playerHunger, position->x + 1, position->y, flashAlpha, HungerHelper::isRotten(heldItem) || player->hasEffect(*(MobEffect::getById(17))));
         float newFoodValue = playerHunger + foodHunger;
         float newSaturationValue = playerSaturation + foodSaturationIncrement;
         float saturationGained = newSaturationValue > newFoodValue ? newFoodValue - playerSaturation : foodSaturationIncrement;
-        drawSaturationOverlay(*ctx, playerSaturation, saturationGained, position->x + 1, position->y, AppleMainModule::flashAlpha);
+        drawSaturationOverlay(*ctx, playerSaturation, saturationGained, position->x + 1, position->y, flashAlpha);
     }
 }
 

@@ -5,6 +5,7 @@
 #include <symbol.h>
 
 #include <Level.hpp>
+#include <Timer.hpp>
 
 #include "main.hpp"
 #include "hunger.hpp"
@@ -20,9 +21,11 @@ bool AppleMainModule::ModConfig::SHOW_FOOD_DEBUG_INFO = true;
 bool AppleMainModule::ModConfig::SHOW_FOOD_HEALTH_HUD_OVERLAY = true;
 bool AppleMainModule::ModConfig::SHOW_VANILLA_ANIMATION_OVERLAY = true;
 float AppleMainModule::ModConfig::MAX_HUD_OVERLAY_FLASH_ALPHA = 0.65f;
+bool AppleMainModule::ModConfig::FLASH_ALPHA_INTERPOLATION = true;
 
 
 float AppleMainModule::unclampedFlashAlpha = 0.0f;
+float AppleMainModule::prevFlashAlpha = 0.0f;
 float AppleMainModule::flashAlpha = 0.0f;
 short AppleMainModule::alphaDir = 1;
 
@@ -46,10 +49,13 @@ void AppleMainModule::initialize() {
 		SYMBOL("mcpe", "_ZN5Level4tickEv"),
 		LAMBDA((Level* level), {
 			if(level->isClientSide()) {
-				unclampedFlashAlpha += alphaDir * 0.125f;
-				if(unclampedFlashAlpha >= 1.5f) alphaDir = -1;
-				else if(unclampedFlashAlpha <= -0.5f) alphaDir = 1;
-				flashAlpha = fmaxf(0.0f, fminf(1.0f, unclampedFlashAlpha)) * ModConfig::MAX_HUD_OVERLAY_FLASH_ALPHA;
+				if(AppleHungerModule::HungerHelper::isPlayerHoldingFood()) {
+					unclampedFlashAlpha += alphaDir * 0.125f;
+					if(unclampedFlashAlpha >= 1.5f) alphaDir = -1;
+					else if(unclampedFlashAlpha <= -0.5f) alphaDir = 1;
+					prevFlashAlpha = flashAlpha;
+					flashAlpha = fmaxf(0.0f, fminf(1.0f, unclampedFlashAlpha)) * ModConfig::MAX_HUD_OVERLAY_FLASH_ALPHA;
+				} else resetFlash();
 			}
 		}, ), HookManager::RETURN | HookManager::LISTENER
 	);
@@ -64,8 +70,8 @@ MAIN {
 
 JS_MODULE_VERSION(AppleSkinConfig, 1)
 JS_EXPORT(
-	AppleSkinConfig, initModConfig, "V(BBBBBBBBBF)",
-	(JNIEnv* env, bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7, bool b8, bool b9, float f1) {
+	AppleSkinConfig, initModConfig, "V(BBBBBBBBBFB)",
+	(JNIEnv* env, bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7, bool b8, bool b9, float f1, bool b10) {
 		AppleMainModule::ModConfig::SHOW_FOOD_VALUES_IN_TOOLTIP = b1;
 		AppleMainModule::ModConfig::ALWAYS_SHOW_FOOD_VALUES_TOOLTIP = b2;
 		AppleMainModule::ModConfig::SHOW_SATURATION_OVERLAY = b3;
@@ -76,5 +82,6 @@ JS_EXPORT(
 		AppleMainModule::ModConfig::SHOW_FOOD_HEALTH_HUD_OVERLAY = b8;
 		AppleMainModule::ModConfig::SHOW_VANILLA_ANIMATION_OVERLAY = b9;
 		AppleMainModule::ModConfig::MAX_HUD_OVERLAY_FLASH_ALPHA = fmaxf(0.0f, fminf(1.0f, f1));
+		AppleMainModule::ModConfig::FLASH_ALPHA_INTERPOLATION = b10;
 	}
 )

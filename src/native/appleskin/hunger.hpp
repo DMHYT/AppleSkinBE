@@ -18,6 +18,7 @@ class AppleHungerModule : public Module {
         static bool canConsume(Item*, LocalPlayer*);
         static FoodItemComponentLegacy* getFoodValues(Item*);
         static bool isRotten(Item*);
+        static bool isPlayerHoldingFood();
     };
     static std::vector<Vec2> foodBarOffsets;
     static void drawExhaustionOverlay(ScreenContext& ctx, float exhaustion, float x, float y);

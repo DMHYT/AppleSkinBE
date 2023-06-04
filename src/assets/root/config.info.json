@@ -108,6 +108,17 @@
                 "ru": "Значение непрозрачности для мигающих иконок в их самый видимый момент (1.0 = полная непрозрачность, 0.0 = полная прозрачность)"
             },
             "displayIf": "enabled"
+        },
+        "flashAlphaInterpolation": {
+            "name": {
+                "en": "Enable Flash Alpha Interpolation",
+                "ru": "Включить интерполяцию непрозрачности"
+            },
+            "description": {
+                "en": "If true, flash alpha value modifications happen every frame instead of every tick, making the flash animation a bit smoother",
+                "ru": "Если включено, изменения значения непрозрачности происходят каждый кадр вместо каждого тика, делая анимацию мигания немного плавнее"
+            },
+            "displayIf": "enabled"
         }
     }
 }

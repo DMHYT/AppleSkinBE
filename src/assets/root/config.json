@@ -8,5 +8,6 @@
     "showFoodStatsInDebugOverlay": true,
     "showFoodHealthHudOverlay": true,
     "showVanillaAnimationsOverlay": true,
-    "maxHudOverlayFlashAlpha": 0.65
+    "maxHudOverlayFlashAlpha": 0.65,
+    "flashAlphaInterpolation": true
 }
