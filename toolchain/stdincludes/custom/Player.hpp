@@ -1,3 +1,4 @@
+#include <Level.hpp>
 #include <MobEffect.hpp>
 
 #ifndef APPLESKIN_PLAYER_HPP
@@ -19,6 +20,9 @@ class Actor {
     ItemStack* getOffhandSlot() const;
     ActorUniqueID* getUniqueID() const;
     bool hasEffect(MobEffect const&) const;
+    int getHealth() const;
+    int getMaxHealth() const;
+    Level* getLevel();
 };
 
 class Mob : public Actor {public:};
@@ -28,6 +32,7 @@ class Attribute {public:};
 class Player : public Mob {
     public:
     static Attribute HUNGER;
+    bool isHurt();
     float getExhaustion() const;
     float getHunger() const;
     float getSaturation() const;

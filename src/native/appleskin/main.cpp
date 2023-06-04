@@ -9,6 +9,7 @@
 
 #include "main.hpp"
 #include "hunger.hpp"
+#include "heart.hpp"
 
 
 bool AppleMainModule::ModConfig::SHOW_FOOD_VALUES_IN_TOOLTIP = true;
@@ -65,6 +66,7 @@ void AppleMainModule::initialize() {
 MAIN {
 	AppleMainModule* mainModule = new AppleMainModule();
 	AppleHungerModule* hungerModule = new AppleHungerModule(mainModule);
+	AppleHeartModule* heartModule = new AppleHeartModule(mainModule);
 }
 
 

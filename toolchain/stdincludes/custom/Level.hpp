@@ -7,11 +7,23 @@ class Random {
     int nextInt(int);
 };
 
+class GameRuleId {
+    public:
+    char filler[4];
+    GameRuleId(int);
+};
+
+class GameRules;
+
 class Level {
     public:
     bool isClientSide() const;
     Random* getRandom() const;
+    int getDifficulty() const;
+    GameRules* getGameRules();
 };
+
+class ServerLevel : public Level { public: };
 
 
 #endif //APPLESKIN_LEVEL_HPP
