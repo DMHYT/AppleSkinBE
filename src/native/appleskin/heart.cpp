@@ -27,7 +27,7 @@ void AppleHeartModule::drawHealthOverlay(ScreenContext& ctx, int health, int mod
     mce::MaterialPtr material = mce::RenderMaterialGroup::common.getMaterial(HashedString("ui_textured_and_glcolor"));
     for(int i = startHealthBars; i < endHealthBars; ++i) {
         if(healthBarOffsets.size() <= i) continue;
-        Vec2 offset = healthBarOffsets[i];
+        Vec2& offset = healthBarOffsets.at(i);
         float x = left + offset.x;
         float y = top + offset.y;
         std::string textureToUse("textures/ui/heart");
