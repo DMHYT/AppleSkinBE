@@ -63,7 +63,7 @@ bool AppleHungerModule::HungerHelper::isPlayerHoldingFood() {
 std::vector<Vec2> AppleHungerModule::foodBarOffsets;
 
 
-void AppleHungerModule::drawVanillaHungerHud(ScreenContext& ctx, mce::MaterialPtr* material, float right, float top, LocalPlayer* player) {
+void AppleHungerModule::drawVanillaHungerHud(ScreenContext& ctx, mce::MaterialPtr* material, float right, float top, LocalPlayer* player, float propagatedAlpha) {
     int foodLevel = (int) player->getHunger();
     bool hungerEffect = player->hasEffect(*MobEffect::getById(17));
     std::string texBack = hungerEffect ? "textures/ui/hunger_effect_background" : "textures/ui/hunger_background";
@@ -71,20 +71,20 @@ void AppleHungerModule::drawVanillaHungerHud(ScreenContext& ctx, mce::MaterialPt
         Vec2& offset = foodBarOffsets.at(i);
         float x = right + offset.x;
         float y = top + offset.y;
-        AppleMainModule::blit(ctx, material, x, y, 9.0f, 9.0f, texBack, 9.0f, 9.0f, 1.0f);
+        AppleMainModule::blit(ctx, material, x, y, 9.0f, 9.0f, texBack, 9.0f, 9.0f, propagatedAlpha);
         if(foodLevel > i * 2) {
             std::string texFront = hungerEffect ? "textures/ui/hunger_effect_full" : "textures/ui/hunger_full";
             if(i * 2 + 1 == foodLevel) texFront = hungerEffect ? "textures/ui/hunger_effect_half" : "textures/ui/hunger_half";
-            AppleMainModule::blit(ctx, material, x, y, 9.0f, 9.0f, texFront, 9.0f, 9.0f, 1.0f);
+            AppleMainModule::blit(ctx, material, x, y, 9.0f, 9.0f, texFront, 9.0f, 9.0f, propagatedAlpha);
         }
     }
 }
 
-void AppleHungerModule::drawExhaustionOverlay(ScreenContext& ctx, mce::MaterialPtr* material, float exhaustion, float x, float y) {
+void AppleHungerModule::drawExhaustionOverlay(ScreenContext& ctx, mce::MaterialPtr* material, float exhaustion, float x, float y, float propagatedAlpha) {
     float ratio = fminf(1.0f, fmaxf(0.0f, exhaustion / 4.0f));
     float width = (float) ((int) (ratio * 81));
     if(width > 0) {
-        AppleMainModule::blit(ctx, material, x - width, y, width, 9.0f, "textures/ui/appleskin_exhaustion", 81.0f, 9.0f, 0.75f);
+        AppleMainModule::blit(ctx, material, x - width, y, width, 9.0f, "textures/ui/appleskin_exhaustion", 81.0f, 9.0f, propagatedAlpha * 0.75f);
     }
 }
 
@@ -149,18 +149,18 @@ void AppleHungerModule::generateHungerBarOffsets(float right, float top, int tic
     }
 }
 
-void AppleHungerModule::onRender(ScreenContext* ctx, Vec2* position, int ticks) {
+void AppleHungerModule::onRender(ScreenContext* ctx, Vec2* position, int ticks, float propagatedAlpha) {
     mce::MaterialPtr material = mce::RenderMaterialGroup::common.getMaterial(HashedString("ui_textured_and_glcolor"));
     if(AppleMainModule::ModConfig::SHOW_FOOD_EXHAUSTION_UNDERLAY) {
-        drawExhaustionOverlay(*ctx, &material, GlobalContext::getLocalPlayer()->getExhaustion(), position->x, position->y);
+        drawExhaustionOverlay(*ctx, &material, GlobalContext::getLocalPlayer()->getExhaustion(), position->x, position->y, propagatedAlpha);
     }
     LocalPlayer* player = GlobalContext::getLocalPlayer();
     generateHungerBarOffsets(position->x, position->y, ticks, player);
-    drawVanillaHungerHud(*ctx, &material, position->x, position->y, player);
+    drawVanillaHungerHud(*ctx, &material, position->x, position->y, player, propagatedAlpha);
     if(AppleMainModule::shouldRenderAnyOverlays()) {
         float playerSaturation = player->getSaturation();
         if(AppleMainModule::ModConfig::SHOW_SATURATION_OVERLAY) {
-            drawSaturationOverlay(*ctx, &material, playerSaturation, 0.0f, position->x, position->y, 1.0f);
+            drawSaturationOverlay(*ctx, &material, playerSaturation, 0.0f, position->x, position->y, propagatedAlpha);
         }
         ItemStack* heldItemStack = HungerHelper::getCarriedItem(player);
         if(heldItemStack == nullptr) return;
@@ -181,6 +181,7 @@ void AppleHungerModule::onRender(ScreenContext* ctx, Vec2* position, int ticks) 
         FoodItemComponentLegacy* foodValues = HungerHelper::getFoodValues(heldItem);
         if(!AppleMainModule::ModConfig::SHOW_FOOD_VALUES_OVERLAY) return;
         float flashAlpha = AppleMainModule::ModConfig::FLASH_ALPHA_INTERPOLATION ? AppleMainModule::lerpFlashAlpha() : AppleMainModule::flashAlpha;
+        flashAlpha *= propagatedAlpha;
         int foodHunger = foodValues->nutrition;
         float foodSaturationIncrement = foodValues->getSaturationIncrement();
         float playerHunger = player->getHunger();
@@ -198,7 +199,7 @@ void AppleHungerModule::initialize() {
         SYMBOL("mcpe", "_ZN17HudHungerRenderer6renderER24MinecraftUIRenderContextR15IClientInstanceR9UIControliR13RectangleArea"),
         LAMBDA((HookManager::CallbackController* controller, HudHungerRenderer* renderer, MinecraftUIRenderContext& renderContext, ClientInstance& clientInstance, UIControl& control, int someInt, RectangleArea& area), {
             controller->prevent();
-            onRender(renderContext.getScreenContext(), control.getPosition(), renderer->ticks);
+            onRender(renderContext.getScreenContext(), control.getPosition(), renderer->ticks, renderer->propagatedAlpha);
         }, ), HookManager::CALL | HookManager::LISTENER | HookManager::CONTROLLER
     );
 }

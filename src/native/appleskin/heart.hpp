@@ -16,7 +16,7 @@ class AppleHeartModule : public Module {
     static int getEstimatedHealthIncrement(int nutrition, float saturation, float exhaustion);
     static bool shouldShowEstimatedHealth(LocalPlayer* player);
     static void generateHealthBarOffsets(float x, float y, int ticks, LocalPlayer* player, int uiProfileMultiplier);
-    static void onRender(ScreenContext* ctx, Vec2* position, int ticks, int uiProfileMultiplier);
+    static void onRender(ScreenContext* ctx, Vec2* position, int ticks, int uiProfileMultiplier, float propagatedAlpha);
     AppleHeartModule(Module* parent): Module(parent, "appleskin.heart") {};
     virtual void initialize();
 };

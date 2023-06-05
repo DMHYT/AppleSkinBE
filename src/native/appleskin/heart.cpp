@@ -116,7 +116,7 @@ void AppleHeartModule::generateHealthBarOffsets(float left, float top, int ticks
     }
 }
 
-void AppleHeartModule::onRender(ScreenContext* ctx, Vec2* position, int ticks, int uiProfileMultiplier) {
+void AppleHeartModule::onRender(ScreenContext* ctx, Vec2* position, int ticks, int uiProfileMultiplier, float propagatedAlpha) {
     if(AppleMainModule::shouldRenderAnyOverlays()) {
         LocalPlayer* player = GlobalContext::getLocalPlayer();
         generateHealthBarOffsets(position->x, position->y, ticks, player, uiProfileMultiplier);
@@ -141,6 +141,7 @@ void AppleHeartModule::onRender(ScreenContext* ctx, Vec2* position, int ticks, i
         int currentHealth = player->getHealth();
         int modifiedHealth = (int) fminf((float) (currentHealth + foodHealthIncrement), (float) player->getMaxHealth());
         float flashAlpha = AppleMainModule::ModConfig::FLASH_ALPHA_INTERPOLATION ? AppleMainModule::lerpFlashAlpha() : AppleMainModule::flashAlpha;
+        flashAlpha *= propagatedAlpha;
         drawHealthOverlay(*ctx, currentHealth, modifiedHealth, position->x, position->y, flashAlpha);
     }
 }
@@ -167,7 +168,7 @@ void AppleHeartModule::initialize() {
             Options* options = VTABLE_CALL<Options*>(ClientInstance_getOptions, &clientInstance);
             int uiProfileMultiplier = options->getUIProfile() == 0 ? -1 : 1;
             int ticks = (int) (getTimeS() * 20.0); // TODO renderer->ticks with hearthudparity
-            onRender(renderContext.getScreenContext(), control.getPosition(), ticks, uiProfileMultiplier);
+            onRender(renderContext.getScreenContext(), control.getPosition(), ticks, uiProfileMultiplier, renderer->propagatedAlpha);
         }, ), HookManager::RETURN | HookManager::LISTENER
     );
 }
