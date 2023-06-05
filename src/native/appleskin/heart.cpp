@@ -68,7 +68,7 @@ int AppleHeartModule::getEstimatedHealthIncrement(int nutrition, float saturatio
             if(saturation > 0) saturation = fmaxf(saturation - 1.0f, 0.0f);
             else nutrition--;
         }
-        if(nutrition >= 20 && saturation > 0.0f) {
+        if(nutrition >= 20 && saturation > 0.0f && AppleMainModule::Compat::isRegenParityInstalled()) {
             float limitedSaturationLevel = fminf(saturation, 6.0f);
             float exhaustionUntilAboveMax = nextafterf(4.0f, 5.0f) - exhaustion;
             int numIterationsUntilAboveMax = (int) fmaxf(1.0f, ceilf(exhaustionUntilAboveMax / limitedSaturationLevel));
@@ -104,11 +104,12 @@ void AppleHeartModule::generateHealthBarOffsets(float left, float top, int ticks
     }
     if(healthBarOffsets.size() != healthBars) healthBarOffsets.resize(healthBars, Vec2 { 0.0f, 0.0f });
     Random* rand = GlobalContext::getLevel()->getRandom();
+    rand->_setSeed(312871 * ticks);
     for(int i = healthBars - 1; i >= 0; --i) {
         int row = (int) ceilf((float) (i + 1) / 10.0f) - 1;
         float x = left + (float) (i % 10 * 8);
         int y = top + uiProfileMultiplier * row * healthRowHeight;
-        if(shouldAnimateHealth) y += rand->nextInt(2);
+        if(shouldAnimateHealth) y += rand->nextInt(2) - 1;
         Vec2& point = healthBarOffsets.at(i);
         point.x = x - left;
         point.y = y - top;
@@ -146,25 +147,27 @@ void AppleHeartModule::onRender(ScreenContext* ctx, Vec2* position, int ticks, i
 
 void AppleHeartModule::initialize() {
     DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
-    HookManager::addCallback(
-        SYMBOL("mcpe", "_ZN16HudHeartRendererC2Ev"),
-        LAMBDA((HudHeartRenderer* renderer), {
-            renderer->ticks = 0;
-        }, ), HookManager::RETURN | HookManager::LISTENER
-    );
-    HookManager::addCallback(
-        SYMBOL("mcpe", "_ZN16HudHeartRenderer6updateER15IClientInstanceR9UIControlRK7UIScene"),
-        LAMBDA((HudHeartRenderer* renderer, ClientInstance& clientInstance, UIControl& control, const UIScene& scene), {
-            ++renderer->ticks;
-        }, ), HookManager::CALL | HookManager::LISTENER
-    );
+    // move to hearthudparity
+    // HookManager::addCallback(
+    //     SYMBOL("mcpe", "_ZN16HudHeartRendererC2Ev"),
+    //     LAMBDA((HudHeartRenderer* renderer), {
+    //         renderer->ticks = 0;
+    //     }, ), HookManager::RETURN | HookManager::LISTENER
+    // );
+    // HookManager::addCallback(
+    //     SYMBOL("mcpe", "_ZN16HudHeartRenderer6updateER15IClientInstanceR9UIControlRK7UIScene"),
+    //     LAMBDA((HudHeartRenderer* renderer, ClientInstance& clientInstance, UIControl& control, const UIScene& scene), {
+    //         ++renderer->ticks;
+    //     }, ), HookManager::CALL | HookManager::LISTENER
+    // );
     HookManager::addCallback(
         SYMBOL("mcpe", "_ZN16HudHeartRenderer6renderER24MinecraftUIRenderContextR15IClientInstanceR9UIControliR13RectangleArea"),
         LAMBDA((HudHeartRenderer* renderer, MinecraftUIRenderContext& renderContext, ClientInstance& clientInstance, UIControl& control, int someInt, RectangleArea& area), {
             VTABLE_FIND_OFFSET(ClientInstance_getOptions, _ZTV14ClientInstance, _ZNK14ClientInstance10getOptionsEv);
             Options* options = VTABLE_CALL<Options*>(ClientInstance_getOptions, &clientInstance);
             int uiProfileMultiplier = options->getUIProfile() == 0 ? -1 : 1;
-            onRender(renderContext.getScreenContext(), control.getPosition(), renderer->ticks, uiProfileMultiplier);
+            int ticks = (int) (getTimeS() * 20.0); // TODO renderer->ticks with hearthudparity
+            onRender(renderContext.getScreenContext(), control.getPosition(), ticks, uiProfileMultiplier);
         }, ), HookManager::RETURN | HookManager::LISTENER
     );
 }

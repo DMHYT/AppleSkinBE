@@ -24,6 +24,18 @@ class AppleMainModule : public Module {
         static float MAX_HUD_OVERLAY_FLASH_ALPHA;
         static bool FLASH_ALPHA_INTERPOLATION;
     };
+    class Compat {
+        public:
+        static bool REGEN_PARITY_CHECKED;
+        static bool REGEN_PARITY_INSTALLED;
+        static inline bool isRegenParityInstalled() {
+            if(!REGEN_PARITY_CHECKED) {
+                REGEN_PARITY_INSTALLED = !ModuleRegistry::getModulesById("regenparity").empty();
+                REGEN_PARITY_CHECKED = true;
+            }
+            return REGEN_PARITY_INSTALLED;
+        }
+    };
     static float unclampedFlashAlpha;
     static float prevFlashAlpha;
     static float flashAlpha;

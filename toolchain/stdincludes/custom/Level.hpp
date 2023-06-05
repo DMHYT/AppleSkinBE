@@ -2,7 +2,17 @@
 #define APPLESKIN_LEVEL_HPP
 
 
-class Random {
+double getTimeS();
+
+class Core {
+    public:
+    class Random {
+        public:
+        void _setSeed(unsigned int);
+    };
+};
+
+class Random : public Core::Random {
     public:
     int nextInt(int);
 };
