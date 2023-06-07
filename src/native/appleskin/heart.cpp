@@ -97,7 +97,7 @@ void AppleHeartModule::generateHealthBarOffsets(float left, float top, int ticks
     int maxHealth = player->getMaxHealth();
     int healthBars = (int) ceilf((float) maxHealth / 2.0f);
     int healthRows = (int) ceilf((float) healthBars / 10.0f);
-    int healthRowHeight = 10; // VANILLA
+    int healthRowHeight = AppleMainModule::Compat::isHeartHudParityInstalled() ? ((int) fmaxf((float) (10 - (healthRows - 2)), 3.0f)) : 10;
     bool shouldAnimateHealth = false;
     if(AppleMainModule::ModConfig::SHOW_VANILLA_ANIMATION_OVERLAY) {
         shouldAnimateHealth = player->getHealth() <= 4;
@@ -148,26 +148,13 @@ void AppleHeartModule::onRender(ScreenContext* ctx, Vec2* position, int ticks, i
 
 void AppleHeartModule::initialize() {
     DLHandleManager::initializeHandle("libminecraftpe.so", "mcpe");
-    // move to hearthudparity
-    // HookManager::addCallback(
-    //     SYMBOL("mcpe", "_ZN16HudHeartRendererC2Ev"),
-    //     LAMBDA((HudHeartRenderer* renderer), {
-    //         renderer->ticks = 0;
-    //     }, ), HookManager::RETURN | HookManager::LISTENER
-    // );
-    // HookManager::addCallback(
-    //     SYMBOL("mcpe", "_ZN16HudHeartRenderer6updateER15IClientInstanceR9UIControlRK7UIScene"),
-    //     LAMBDA((HudHeartRenderer* renderer, ClientInstance& clientInstance, UIControl& control, const UIScene& scene), {
-    //         ++renderer->ticks;
-    //     }, ), HookManager::CALL | HookManager::LISTENER
-    // );
     HookManager::addCallback(
         SYMBOL("mcpe", "_ZN16HudHeartRenderer6renderER24MinecraftUIRenderContextR15IClientInstanceR9UIControliR13RectangleArea"),
         LAMBDA((HudHeartRenderer* renderer, MinecraftUIRenderContext& renderContext, ClientInstance& clientInstance, UIControl& control, int someInt, RectangleArea& area), {
             VTABLE_FIND_OFFSET(ClientInstance_getOptions, _ZTV14ClientInstance, _ZNK14ClientInstance10getOptionsEv);
             Options* options = VTABLE_CALL<Options*>(ClientInstance_getOptions, &clientInstance);
             int uiProfileMultiplier = options->getUIProfile() == 0 ? -1 : 1;
-            int ticks = (int) (getTimeS() * 20.0); // TODO renderer->ticks with hearthudparity
+            int ticks = AppleMainModule::Compat::isHeartHudParityInstalled() ? renderer->ticks : ((int) (getTimeS() * 20.0));
             onRender(renderContext.getScreenContext(), control.getPosition(), ticks, uiProfileMultiplier, renderer->propagatedAlpha);
         }, ), HookManager::RETURN | HookManager::LISTENER
     );

@@ -26,14 +26,13 @@ class AppleMainModule : public Module {
     };
     class Compat {
         public:
-        static bool REGEN_PARITY_CHECKED;
-        static bool REGEN_PARITY_INSTALLED;
         static inline bool isRegenParityInstalled() {
-            if(!REGEN_PARITY_CHECKED) {
-                REGEN_PARITY_INSTALLED = !ModuleRegistry::getModulesById("regenparity").empty();
-                REGEN_PARITY_CHECKED = true;
-            }
+            static bool REGEN_PARITY_INSTALLED = !ModuleRegistry::getModulesById("regenparity").empty();
             return REGEN_PARITY_INSTALLED;
+        }
+        static inline bool isHeartHudParityInstalled() {
+            static bool HEART_HUD_PARITY_INSTALLED = !ModuleRegistry::getModulesById("hearthudparity").empty();
+            return HEART_HUD_PARITY_INSTALLED;
         }
     };
     static float unclampedFlashAlpha;

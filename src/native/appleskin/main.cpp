@@ -25,10 +25,6 @@ float AppleMainModule::ModConfig::MAX_HUD_OVERLAY_FLASH_ALPHA = 0.65f;
 bool AppleMainModule::ModConfig::FLASH_ALPHA_INTERPOLATION = true;
 
 
-bool AppleMainModule::Compat::REGEN_PARITY_CHECKED = false;
-bool AppleMainModule::Compat::REGEN_PARITY_INSTALLED = false;
-
-
 float AppleMainModule::unclampedFlashAlpha = 0.0f;
 float AppleMainModule::prevFlashAlpha = 0.0f;
 float AppleMainModule::flashAlpha = 0.0f;
