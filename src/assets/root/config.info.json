@@ -16,8 +16,8 @@
                 "ru": "Показывать значения еды в подсказках"
             },
             "description": {
-                "en": "If true, shows the hunger and saturation values of food in its tooltip",
-                "ru": "Если включено, показывает значения сытости и насыщения еды в её подсказке"
+                "en": "If true, shows the hunger and saturation values of food in its tooltip (unused)",
+                "ru": "Если включено, показывает значения сытости и насыщения еды в её подсказке (не используется)"
             },
             "displayIf": "enabled"
         },
@@ -78,8 +78,8 @@
         },
         "showFoodHealthHudOverlay": {
             "name": {
-                "en": "Show Food Health HUD Overlay (unused)",
-                "ru": "Показывать HUD-overlay здоровья, восстанавливаемого едой (не используется)"
+                "en": "Show Food Health HUD Overlay",
+                "ru": "Показывать HUD-overlay здоровья, восстанавливаемого едой"
             },
             "description": {
                 "en": "If true, shows estimated health restored by food on the health bar",
